@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Movie } from '../../models/movie.model';
+import { DataService } from '../../services/data/data.service';
 
 @Component({
   selector: 'app-search-result',
@@ -6,10 +8,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./search-result.component.css']
 })
 export class SearchResultComponent implements OnInit {
-
-  constructor() { }
+  movies: Movie[];
+  constructor(
+    private dataService: DataService
+  ) { }
 
   ngOnInit() {
+    this.movies = this.dataService.getMovies();
   }
-
 }

@@ -1,0 +1,10 @@
+#production
+out/
+
+#build
+build
+
+#Ide
+.idea/
+
+.gradle/

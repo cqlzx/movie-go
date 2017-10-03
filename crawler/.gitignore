@@ -1,0 +1,14 @@
+#gradle
+.gradle/
+
+#IntelliJ Ide
+.idea/
+
+#build
+out/
+
+#intermediate data
+tmp/
+
+#crawed data
+data/

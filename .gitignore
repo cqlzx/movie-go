@@ -1,2 +1,8 @@
+#OS
 .DS_Store
+
+#Ide
 .idea/
+
+#parsed data
+data/

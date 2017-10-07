@@ -27,9 +27,9 @@ public class SubtitleCrawler extends WebCrawler {
 
     private static File dataStorage;
 
-    private int counter = 0;
+    private static int counter = 0;
 
-//    private Set<String> set = new HashSet<>();
+    private Set<String> set = new HashSet<>();
 
     public static void configure(String[] domains, String dataFolder) {
         crawlDomains = domains;
@@ -52,13 +52,29 @@ public class SubtitleCrawler extends WebCrawler {
 
         for (String domain : crawlDomains) {
             if (domain.equals(downloadDomain)) {
-                if (href.endsWith(".zip")) {
-                    String[] segments = href.split("-");
-                    return segments.length > 2 && segments[segments.length - 2].equals("english");
-                } else {
-                    String[] segments = href.split("-");
-                    return segments.length > 3 && segments[segments.length - 3].equals("english");
+//                if (href.endsWith(".zip")) {
+//                    String[] segments = href.split("-");
+//                    return segments.length > 2 && segments[segments.length - 2].equals("english");
+//                } else {
+
+
+                String[] segments = href.split("-");
+                if (segments.length < 3 || !segments[segments.length - 3].equals("english")) {
+                    return false;
                 }
+
+                if (set.contains(segments[0] + segments[segments.length - 4])) {
+                    if (set.size() > 10) {
+                        set.clear();
+                    }
+                    return false;
+                } else {
+                    set.add(segments[0] + segments[segments.length - 4]);
+                    return true;
+                }
+
+
+//                }
             } else {
                 if (href.startsWith(domain)) {
                     return true;

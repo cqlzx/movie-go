@@ -10,5 +10,8 @@ out/
 #intermediate data
 tmp/
 
-#crawed data
+#raw srt data
 raw_data/
+
+#crawled data
+zip_data/

@@ -31,7 +31,7 @@ public class SubtitleCrawlController {
 
         config.setPolitenessDelay(200);
 
-        config.setMaxPagesToFetch(100);
+        config.setMaxPagesToFetch(-1);
 
 
 

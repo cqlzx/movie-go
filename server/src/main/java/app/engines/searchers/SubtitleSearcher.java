@@ -7,10 +7,7 @@ import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.queryparser.classic.ParseException;
 import org.apache.lucene.queryparser.classic.QueryParser;
-import org.apache.lucene.search.IndexSearcher;
-import org.apache.lucene.search.Query;
-import org.apache.lucene.search.ScoreDoc;
-import org.apache.lucene.search.TopDocs;
+import org.apache.lucene.search.*;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 
@@ -34,7 +31,11 @@ public class SubtitleSearcher {
 
     public TopDocs search(String searchQuery) throws IOException, ParseException {
         query = parser.parse(searchQuery);
-        return indexSearcher.search(query, SubtitleConstants.MAX_SEARCH);
+        Query newQuery = new BooleanQuery.Builder()
+                .add(new BooleanClause(new MatchAllDocsQuery(), BooleanClause.Occur.MUST))
+                .add(new BooleanClause(query, BooleanClause.Occur.SHOULD))
+                .build();
+        return indexSearcher.search(newQuery, SubtitleConstants.MAX_SEARCH);
     }
 
     public Document getDocument(ScoreDoc scoreDoc) throws IOException {

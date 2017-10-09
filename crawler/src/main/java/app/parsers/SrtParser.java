@@ -25,45 +25,38 @@ public class SrtParser {
         String rawDataDir = args[0];
         String destDataDir = "./../" + args[1];
 
-        try {
-            File f = new File(rawDataDir);
+        File f = new File(rawDataDir);
+        File[] rawFiles = f.listFiles();
 
-//            System.out.println(f.getAbsolutePath());
+        if (rawFiles == null) {
+            return;
+        }
+        for (File file : rawFiles) {
+            //Count total srt files
+            totalFiles++;
 
-            File[] rawFiles = f.listFiles();
-
-            if (rawFiles == null) {
-                return;
+            if (!file.getName().endsWith(".srt")) {
+                wrongFiles++;
+                continue;
             }
-//            System.out.println(rawFiles.length);
 
-            for (File file : rawFiles) {
-                //Count total srt files
-                totalFiles++;
+            String movieName = getMovieName(file);
+            if (movieName.equals("error") || movieNames.contains(movieName)) {
+                //Invalid name or duplicate file with same name
+                wrongFiles++;
+                continue;
+            }
+            movieNames.add(movieName);
 
-                if (!file.getName().endsWith(".srt")) {
-                    wrongFiles++;
-                    continue;
-                }
-
-//                System.out.println(file.getName());
-
-                String movieName = getMovieName(file);
-                if (movieName.equals("error") || movieNames.contains(movieName)) {
-                    //Invalid name or duplicate file with same name
-                    wrongFiles++;
-                    continue;
-                }
-                movieNames.add(movieName);
-
-                int counter = 1;
-                String sequence = String.format("%04d", counter);
-                String extension = "txt";
-                String fileName = destDataDir + "/" + movieName + "^" + sequence + "." + extension;
+            int counter = 1;
+            String sequence = String.format("%04d", counter);
+            String extension = "txt";
+            String fileName = destDataDir + "/" + movieName + "^" + sequence + "." + extension;
 
 
+            String line;
 
-                String line;
+            try {
                 FileReader fileReader = new FileReader(file);
                 BufferedReader bufferedReader = new BufferedReader(fileReader);
                 BufferedWriter writer = new BufferedWriter(new FileWriter(fileName));
@@ -88,14 +81,16 @@ public class SrtParser {
                 fileReader.close();
 
                 System.out.println(counter + " files written for " + file.getName());
+            } catch (IOException e) {
+                wrongFiles++;
+                e.printStackTrace();
             }
 
-            System.out.println();
-            System.out.println(totalFiles + " files parsed! " + wrongFiles + " wrong files!");
-
-        } catch (IOException e) {
-            e.printStackTrace();
         }
+
+        System.out.println();
+        System.out.println(totalFiles + " files parsed! " + wrongFiles + " wrong files!");
+
     }
 
     private static String getMovieName(File file) {

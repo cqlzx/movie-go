@@ -8,3 +8,6 @@ build
 .idea/
 
 .gradle/
+
+#index intermediate files
+indexes/

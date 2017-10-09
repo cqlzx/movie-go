@@ -24,4 +24,13 @@ targetCompatibility = 1.8
 dependencies {
     compile("org.springframework.boot:spring-boot-starter-web")
     testCompile('org.springframework.boot:spring-boot-starter-test')
+
+    // https://mvnrepository.com/artifact/org.apache.lucene/lucene-core
+    compile group: 'org.apache.lucene', name: 'lucene-core', version: '6.6.0'
+
+
+    compile group: 'org.apache.lucene', name: 'lucene-queryparser', version: '6.1.0'
+
+    compile group: 'org.apache.lucene', name: 'lucene-analyzers', version: '3.1.0'
+
 }

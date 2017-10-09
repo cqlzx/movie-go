@@ -90,6 +90,9 @@ public class SrtParser {
                 System.out.println(counter + " files written for " + file.getName());
             }
 
+            System.out.println();
+            System.out.println(totalFiles + " files parsed! " + wrongFiles + " wrong files!");
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -101,7 +104,7 @@ public class SrtParser {
         name = name.replaceAll("\\[.*\\]", "");
         name = name.trim();
 
-        String[] parts = name.split("^ |-|_|\\.$");
+        String[] parts = name.split(" |-|_|\\.");
 
         //File invalid or bad file name
         if (parts.length < 2) {
@@ -117,9 +120,25 @@ public class SrtParser {
                 continue;
             }
 
-            //Movie year, the end of movie name
-            //TODO: end point
-            if (StringUtils.isNumeric(part) && part.length() == 4) {
+            part = part.toLowerCase();
+
+            //Movie resolution
+            if (part.equals("720p") || part.equals("1080p")) {
+                break;
+            }
+
+            //Subtitle language
+            if (part.equals("en") || part.equals("eng") || part.equals("english")) {
+                break;
+            }
+
+            //Web domain and suffix
+            if (part.equals("yify") || part.equals("srt")) {
+                break;
+            }
+
+            //Movie year
+            if (StringUtils.isNumeric(part) && part.length() == 4 && sb.length() != 0) {
                 break;
             }
 

@@ -27,19 +27,19 @@ public class SubtitleCrawlController {
 
         CrawlConfig config = new CrawlConfig();
 
+        //Directory to store tmp files
         config.setCrawlStorageFolder(rootFolder);
 
+        //200ms delay
         config.setPolitenessDelay(200);
 
+        //As much as possible
         config.setMaxPagesToFetch(-1);
-
 
 
         config.setIncludeBinaryContentInCrawling(true);
 
         String[] domains = {
-//                "http://www.yifysubtitles.com/movie-imdb/tt4703048",
-//                "http://www.yifysubtitles.com/subtitles/6-days-english-yify-115233",
                 "http://www.yifysubtitles.com/language/english",
                 "http://www.yifysubtitles.com/movie-imdb/",
                 "http://www.yifysubtitles.com/subtitles/",
